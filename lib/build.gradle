@@ -16,8 +16,18 @@ dependencies {
 	runtimeOnly group: 'mysql', name: 'mysql-connector-java', version: '8.0.25'
 }
 
-jar {
+/*jar {
     manifest {
         attributes 'Main-Class': 'in.nareshit.raghu.Test'
     }
+   
+}*/
+
+task fatJar(type: Jar) {
+    manifest {
+       attributes 'Main-Class': 'in.nareshit.raghu.Test'
+    }
+    baseName = 'all-in-one-jar'
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
 }
